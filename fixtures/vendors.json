@@ -1,0 +1,14 @@
+[
+  { "id": "V01", "name": "Northwind Dental Supply", "country": "US", "currency": "USD" },
+  { "id": "V02", "name": "Alpine Cloud Hosting", "country": "CH", "currency": "EUR" },
+  { "id": "V03", "name": "Bluebird Office Logistics", "country": "US", "currency": "USD" },
+  { "id": "V04", "name": "Kobold Precision Tools", "country": "DE", "currency": "EUR" },
+  { "id": "V05", "name": "Mesa Janitorial Group", "country": "US", "currency": "USD" },
+  { "id": "V06", "name": "Sora Imaging Systems", "country": "JP", "currency": "USD" },
+  { "id": "V07", "name": "Duarte & Sons Packaging", "country": "PT", "currency": "EUR" },
+  { "id": "V08", "name": "Harborline Insurance Services", "country": "US", "currency": "USD" },
+  { "id": "V09", "name": "Nordvik Lab Consumables", "country": "SE", "currency": "EUR" },
+  { "id": "V10", "name": "Copper Canyon Utilities", "country": "US", "currency": "USD" },
+  { "id": "V11", "name": "Wexford Compliance Advisors", "country": "IE", "currency": "EUR" },
+  { "id": "V12", "name": "Brightpath Staffing", "country": "US", "currency": "USD" }
+]
