@@ -1,0 +1,23 @@
+{
+  "name": "even",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "predev": "pnpm -r --filter @even/core --filter @even/store --filter @even/sdk build",
+    "dev": "pnpm --filter @even/web dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r exec tsc --noEmit",
+    "e2e": "playwright test",
+    "postinstall": "pnpm -r --filter @even/core --filter @even/store --filter @even/sdk --filter @even/demo build"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "typescript": "^5.9.3"
+  }
+}

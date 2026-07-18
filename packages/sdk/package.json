@@ -1,0 +1,29 @@
+{
+  "name": "@even/sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./pricing.json": "./dist/pricing.json"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node -e \"require('node:fs').copyFileSync('src/pricing.json','dist/pricing.json')\"",
+    "pretest": "pnpm --filter @even/core --filter @even/store build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@even/core": "workspace:*",
+    "@even/store": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  }
+}
