@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0a0f;
+  --color-surface: #121218;
+  --color-elevated: #17171f;
+  --color-border: #1f1f28;
+  --color-primary: #4f46e5;
+  --color-primary-soft: #6366f1;
+  --color-success: #10b981;
+  --color-warn: #f59e0b;
+  --color-danger: #ef4444;
+  --color-text: #e7e7ea;
+  --color-muted: #8b8b96;
+
+  --font-sans: "General Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --radius-card: 10px;
+}
+
+/* Receipt marquee: seamless -50% loop over the duplicated track. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 36s linear infinite;
+}
+
+.marquee-paused:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* Utility: opt-in respect for users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .respect-reduced-motion {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}
