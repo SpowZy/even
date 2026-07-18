@@ -1,0 +1,32 @@
+{
+  "name": "@even/demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "pretest": "pnpm --filter @even/core --filter @even/store --filter @even/sdk build",
+    "test": "vitest run --passWithNoTests",
+    "seed": "tsx src/cli.ts",
+    "gen:fixtures": "tsx scripts/generate-invoices.ts"
+  },
+  "dependencies": {
+    "@even/core": "workspace:*",
+    "@even/store": "workspace:*",
+    "@even/sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "tsx": "^4.16.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  }
+}
