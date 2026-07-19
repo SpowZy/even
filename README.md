@@ -7,7 +7,7 @@
 <p align="center"><strong>Every agent action, accounted for.</strong></p>
 
 <p align="center">
-  <a href="https://even-neon-two.vercel.app">Live demo</a> ·
+  <a href="https://even-receipts.vercel.app">Live demo</a> ·
   <a href="https://github.com/SpowZy/even">GitHub</a>
 </p>
 
