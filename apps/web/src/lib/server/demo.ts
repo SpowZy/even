@@ -1,21 +1,21 @@
-import { MemoryStore } from "@even/store";
 import type { Run } from "@even/core";
-import { seedMemoryStore, tamperDemoReceipt } from "@even/demo";
+import { seedStore, tamperDemoReceipt } from "@even/demo";
+import type { TamperableStore } from "@even/demo";
 import { getStore } from "./store";
 import { emitReceipt, emitRun } from "./bus";
 
-function demoStore(): MemoryStore {
+function tamperable(): TamperableStore {
   const store = getStore();
-  if (!(store instanceof MemoryStore)) {
-    throw new Error("demo endpoints require the in-memory store");
+  if (typeof (store as Partial<TamperableStore>).debugTamper !== "function") {
+    throw new Error("the configured store does not support the tamper demo");
   }
-  return store;
+  return store as TamperableStore;
 }
 
 /** Run the scripted finance-ops agent and broadcast everything it did. */
 export async function seedDemo(): Promise<{ run: Run }> {
-  const store = demoStore();
-  const { run } = await seedMemoryStore(store);
+  const store = getStore();
+  const { run } = await seedStore(store);
   const receipts = await store.listReceipts(run.id);
   emitRun(run);
   for (const receipt of receipts) emitReceipt(receipt);
@@ -26,7 +26,6 @@ export async function seedDemo(): Promise<{ run: Run }> {
 
 /** Flip bytes at rest inside the ledger — verification must catch it. */
 export async function tamperDemo(runId: string): Promise<{ tamperedSeq: number }> {
-  const store = demoStore();
-  const { seq } = await tamperDemoReceipt(store, runId);
+  const { seq } = await tamperDemoReceipt(tamperable(), runId);
   return { tamperedSeq: seq };
 }
