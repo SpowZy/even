@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 32" width="148" height="32">
   <rect x="2" y="4" width="10" height="24" rx="2.5" fill="#4f46e5"/>
   <rect x="17" y="4" width="10" height="24" rx="2.5" fill="#4f46e5"/>
-  <text x="40" y="24" font-family="General Sans, system-ui, sans-serif" font-size="26" font-weight="600" letter-spacing="-0.03em" fill="#e7e7ea">even</text>
+  <text x="40" y="24" font-family="General Sans, system-ui, sans-serif" font-size="26" font-weight="600" letter-spacing="-0.03em" fill="#e7e7ea">Even</text>
 </svg>

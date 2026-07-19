@@ -12,8 +12,8 @@ const SCRIPT: Line[] = [
   { text: "$ even verify q3-invoice-ops", tone: "cmd" },
   { text: "✓ 478 receipts · hashes recomputed · signatures valid", tone: "ok" },
   { text: "✓ chain intact · linked from genesis 00000000…", tone: "ok" },
-  { text: "— simulating ledger tamper at seq 240 —", tone: "dim" },
-  { text: "✗ seq 240: hash mismatch — content tampered", tone: "bad" },
+  { text: "> simulating ledger tamper at seq 240", tone: "dim" },
+  { text: "✗ seq 240: hash mismatch: content tampered", tone: "bad" },
   { text: "verification failed: 239/478 verified · exit 1", tone: "bad" },
 ];
 
@@ -94,7 +94,7 @@ export default function TerminalTeaser() {
           </h2>
           <p className="mt-5 max-w-md leading-relaxed text-muted">
             Verification re-walks the entire ledger: sequence, linkage, recomputed
-            hashes, signatures. The first broken link is named exactly — with its
+            hashes, signatures. The first broken link is named exactly, with its
             sequence number.
           </p>
           <a

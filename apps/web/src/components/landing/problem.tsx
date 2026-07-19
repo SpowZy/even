@@ -6,7 +6,7 @@ const CARDS = [
   {
     role: "CFO",
     title: "Agent spend is a black box",
-    body: "One runaway loop can burn a monthly budget before anyone notices. even attributes every cent to an action — and hard-stops at the budget.",
+    body: "One runaway loop can burn a monthly budget before anyone notices. Even attributes every cent to an action, and hard-stops at the budget.",
   },
   {
     role: "CTO",
@@ -39,7 +39,7 @@ export default function Problem() {
         transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-2xl text-3xl font-semibold tracking-[-0.03em] sm:text-5xl"
       >
-        Agents are spending, deciding, and acting — with no receipt.
+        Agents are spending, deciding, and acting, with no receipt.
       </motion.h2>
 
       <div className="mt-14 grid gap-4 md:grid-cols-3">

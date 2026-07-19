@@ -2,17 +2,16 @@
 
 import { useEffect, useRef } from "react";
 
-interface Node {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
+interface Pulse {
+  curve: number;
+  s: number; // 0..1 position along the curve
+  speed: number;
 }
 
 /**
- * Hero backdrop: drifting receipt-nodes that link into chains. One chain is
- * highlighted in violet — the ledger forming in real time. Hand-rolled 2D
- * canvas, DPR-aware, paused when the tab is hidden, single static frame
+ * Hero backdrop: slow luminous currents flowing left to right, with bright
+ * pulses traveling along them like receipts moving through the ledger.
+ * Hand-rolled 2D canvas, DPR-aware, paused when hidden, one static frame
  * under prefers-reduced-motion.
  */
 export default function HeroCanvas() {
@@ -26,9 +25,12 @@ export default function HeroCanvas() {
 
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const CURVES = 11;
+    const PULSES = 26;
     let w = 0;
     let h = 0;
     let raf = 0;
+    let t = 0;
 
     const resize = () => {
       w = canvas.clientWidth;
@@ -40,68 +42,87 @@ export default function HeroCanvas() {
     resize();
     window.addEventListener("resize", resize);
 
-    const count = Math.max(40, Math.min(90, Math.floor((w * h) / 16000)));
-    const nodes: Node[] = Array.from({ length: count }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.22,
-      vy: (Math.random() - 0.5) * 0.22,
+    const pulses: Pulse[] = Array.from({ length: PULSES }, () => ({
+      curve: Math.floor(Math.random() * CURVES),
+      s: Math.random(),
+      speed: 0.0006 + Math.random() * 0.0011,
     }));
-    // Indices forming the highlighted chain.
-    const chain = Array.from({ length: 7 }, (_, i) => Math.floor(((i + 1) * count) / 8));
-    const chainSet = new Set(chain);
-    const LINK_DIST = 120;
+
+    // Vertical position of curve i at horizontal fraction u, time t.
+    // Two layered sines read as a slow organic current, not a wave machine.
+    const curveY = (i: number, u: number, time: number): number => {
+      const base = ((i + 0.5) / CURVES) * h;
+      return (
+        base +
+        Math.sin(u * 4.2 + time * 0.32 + i * 1.7) * (h * 0.045) +
+        Math.sin(u * 9.1 - time * 0.21 + i * 0.9) * (h * 0.02)
+      );
+    };
+
+    const drawCurve = (i: number) => {
+      ctx.beginPath();
+      const steps = 48;
+      for (let k = 0; k <= steps; k++) {
+        const u = k / steps;
+        const x = u * (w + 80) - 40;
+        const y = curveY(i, u, t);
+        if (k === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = "rgba(99,102,241,0.09)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    };
+
+    const drawPulse = (p: Pulse) => {
+      const u = p.s;
+      const x = u * (w + 80) - 40;
+      const y = curveY(p.curve, u, t);
+
+      // Fading trail behind the pulse.
+      const trail = 0.035;
+      const grad = ctx.createLinearGradient(
+        (u - trail) * (w + 80) - 40,
+        y,
+        x,
+        y,
+      );
+      grad.addColorStop(0, "rgba(99,102,241,0)");
+      grad.addColorStop(1, "rgba(129,140,248,0.55)");
+      ctx.beginPath();
+      const trailSteps = 8;
+      for (let k = 0; k <= trailSteps; k++) {
+        const uu = Math.max(0, u - trail + (trail * k) / trailSteps);
+        const xx = uu * (w + 80) - 40;
+        const yy = curveY(p.curve, uu, t);
+        if (k === 0) ctx.moveTo(xx, yy);
+        else ctx.lineTo(xx, yy);
+      }
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+
+      ctx.fillStyle = "rgba(165,180,252,0.95)";
+      ctx.beginPath();
+      ctx.arc(x, y, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+    };
 
     const frame = () => {
       ctx.clearRect(0, 0, w, h);
-      for (const n of nodes) {
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x < 0 || n.x > w) n.vx *= -1;
-        if (n.y < 0 || n.y > h) n.vy *= -1;
-      }
-
-      for (let i = 0; i < count; i++) {
-        for (let j = i + 1; j < count; j++) {
-          const a = nodes[i]!;
-          const b = nodes[j]!;
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < LINK_DIST * LINK_DIST) {
-            const alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.12;
-            ctx.strokeStyle = `rgba(99,102,241,${alpha.toFixed(3)})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      ctx.strokeStyle = "rgba(99,102,241,0.45)";
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      chain.forEach((idx, k) => {
-        const n = nodes[idx]!;
-        if (k === 0) ctx.moveTo(n.x, n.y);
-        else ctx.lineTo(n.x, n.y);
-      });
-      ctx.stroke();
-      ctx.lineWidth = 1;
-
-      for (let i = 0; i < count; i++) {
-        const n = nodes[i]!;
-        const inChain = chainSet.has(i);
-        ctx.fillStyle = inChain ? "rgba(99,102,241,0.9)" : "rgba(139,139,150,0.35)";
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, inChain ? 2.2 : 1.4, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      for (let i = 0; i < CURVES; i++) drawCurve(i);
+      for (const p of pulses) drawPulse(p);
     };
 
     const loop = () => {
+      t += 0.016;
+      for (const p of pulses) {
+        p.s += p.speed;
+        if (p.s > 1.05) {
+          p.s = -0.05;
+          p.curve = Math.floor(Math.random() * CURVES);
+        }
+      }
       frame();
       raf = requestAnimationFrame(loop);
     };
@@ -111,8 +132,6 @@ export default function HeroCanvas() {
       else if (!mq.matches) raf = requestAnimationFrame(loop);
     };
 
-    // Subscribe rather than read once: a preference arriving after mount
-    // stops the loop immediately and leaves a static frame.
     const apply = () => {
       cancelAnimationFrame(raf);
       if (mq.matches) frame();

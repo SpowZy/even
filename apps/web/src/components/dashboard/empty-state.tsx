@@ -19,7 +19,7 @@ export default function EmptyState({
       <p className="mt-2 max-w-sm text-sm text-muted">
         {pickRun
           ? "Select a run to inspect its receipts, costs and chain integrity."
-          : "Fire the demo finance-ops agent: 200 invoices, one blocked injection, and a receipt chain you can verify — and break."}
+          : "Fire the demo finance-ops agent: 200 invoices, one blocked injection, and a receipt chain you can verify, and break."}
       </p>
       {!pickRun && (
         <button

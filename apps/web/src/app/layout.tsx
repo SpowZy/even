@@ -3,14 +3,14 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://even.dev"),
-  title: "even — every agent action, accounted for",
+  title: "Even | Every agent action, accounted for",
   description:
-    "even is the receipt layer for AI agents: signed, hash-chained receipts for every tool call and LLM call, with per-action cost attribution, policy guardrails, and tamper-evident verification.",
+    "Even is the receipt layer for AI agents: signed, hash-chained receipts for every tool call and LLM call, with per-action cost attribution, policy guardrails, and tamper-evident verification.",
   icons: [{ rel: "icon", url: "/icon.svg", type: "image/svg+xml" }],
   openGraph: {
-    title: "even — every agent action, accounted for",
+    title: "Even | Every agent action, accounted for",
     description:
-      "Signed, hash-chained receipts for AI agents. Cost, policy and proof — per action.",
+      "Signed, hash-chained receipts for AI agents. Cost, policy and proof, per action.",
     images: [{ url: "/og.svg", width: 1200, height: 630 }],
   },
 };

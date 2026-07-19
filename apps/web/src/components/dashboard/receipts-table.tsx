@@ -164,7 +164,7 @@ function ReceiptDrawer({
             <div className="mb-1 text-muted">policy</div>
             <div className="font-mono">
               {receipt.policy.verdict}
-              {receipt.policy.reasons.length > 0 && ` — ${receipt.policy.reasons.join("; ")}`}
+              {receipt.policy.reasons.length > 0 && `: ${receipt.policy.reasons.join("; ")}`}
             </div>
           </div>
           <pre className="overflow-auto rounded-card border border-border bg-bg p-3 font-mono text-xs leading-relaxed text-text">
