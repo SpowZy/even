@@ -4,7 +4,12 @@
   <img src="apps/web/public/icon.svg" alt="even logo" width="72" height="72" />
 </p>
 
-<p align="center"><strong>every agent action, accounted for.</strong></p>
+<p align="center"><strong>Every agent action, accounted for.</strong></p>
+
+<p align="center">
+  <a href="https://even-neon-two.vercel.app">Live demo</a> ·
+  <a href="https://github.com/SpowZy/even">GitHub</a>
+</p>
 
 <p align="center">
   <!-- build status placeholder -->

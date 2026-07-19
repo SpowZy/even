@@ -36,7 +36,7 @@ export default function Nav() {
         </nav>
         <div className="ml-auto flex items-center gap-3">
           <a
-            href="https://github.com/spowzy"
+            href="https://github.com/SpowZy/even"
             target="_blank"
             rel="noreferrer"
             className="hidden text-sm text-muted transition-colors hover:text-text sm:block"
