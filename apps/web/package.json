@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "pnpm -r --filter @even/core --filter @even/store --filter @even/sdk --filter @even/demo build",
     "build": "next build",
     "start": "next start",
     "test": "vitest run --passWithNoTests"
