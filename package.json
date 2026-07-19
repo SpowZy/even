@@ -14,6 +14,7 @@
     "test": "pnpm -r test",
     "lint": "pnpm -r exec tsc --noEmit",
     "e2e": "playwright test",
+    "db:migrate": "node scripts/migrate.mjs",
     "postinstall": "pnpm -r --filter @even/core --filter @even/store --filter @even/sdk --filter @even/demo build"
   },
   "devDependencies": {
