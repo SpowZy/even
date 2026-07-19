@@ -131,7 +131,7 @@ export default function DashboardPage() {
           <a href="/" className="flex items-center gap-2.5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icon.svg" alt="even" width={22} height={22} />
-            <span className="text-[15px] font-semibold tracking-tight">even</span>
+            <span className="text-[15px] font-semibold tracking-tight">Even</span>
           </a>
           <span className="text-sm text-muted">operations console</span>
           <div className="ml-auto flex items-center gap-2 text-xs text-muted">

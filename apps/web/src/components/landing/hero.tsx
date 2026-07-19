@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import HeroCanvas from "./hero-canvas";
 
-const HEADLINE = ["every", "agent", "action,", "accounted", "for."];
+const HEADLINE = ["Every", "agent", "action,", "accounted", "for."];
 
 export default function Hero() {
   return (
@@ -18,7 +18,7 @@ export default function Hero() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mb-6 font-mono text-xs tracking-[0.2em] text-muted"
         >
-          EVEN — RECEIPT LAYER FOR AI AGENTS
+          EVEN · RECEIPT LAYER FOR AI AGENTS
         </motion.p>
 
         <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.03em] sm:text-7xl md:text-8xl">
@@ -43,7 +43,7 @@ export default function Hero() {
           className="mt-7 max-w-xl text-lg leading-relaxed text-muted"
         >
           Signed, hash-chained receipts for every tool call and LLM call.
-          Per-action cost, policy verdicts, and proof your auditors can check —
+          Per-action cost, policy verdicts, and proof your auditors can check,
           not logs you have to trust.
         </motion.p>
 

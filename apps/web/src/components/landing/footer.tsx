@@ -63,7 +63,7 @@ export default function Footer() {
           <div className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icon.svg" alt="" width={16} height={16} />
-            <span>even — every agent action, accounted for.</span>
+            <span>Even. Every agent action, accounted for.</span>
           </div>
           <span>MIT · 2026</span>
         </div>

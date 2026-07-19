@@ -24,7 +24,7 @@ export default function Nav() {
         <a href="/" className="flex items-center gap-2.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/icon.svg" alt="even logo" width={24} height={24} />
-          <span className="text-[15px] font-semibold tracking-tight">even</span>
+          <span className="text-[15px] font-semibold tracking-tight">Even</span>
         </a>
         <nav className="hidden items-center gap-6 text-sm text-muted sm:flex">
           <a href="#how" className="transition-colors hover:text-text">
@@ -36,7 +36,7 @@ export default function Nav() {
         </nav>
         <div className="ml-auto flex items-center gap-3">
           <a
-            href="https://github.com"
+            href="https://github.com/spowzy"
             target="_blank"
             rel="noreferrer"
             className="hidden text-sm text-muted transition-colors hover:text-text sm:block"

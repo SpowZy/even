@@ -5,10 +5,13 @@ import type { NextConfig } from "next";
 // transpilePackages is configured here. Run `pnpm build` (or `pnpm predev`)
 // after changing packages/*.
 
+const isDev = process.env.NODE_ENV === "development";
+
 const csp = [
   "default-src 'self'",
-  // 'unsafe-inline' is required by Next dev/HMR and inline font bootstrapping
-  "script-src 'self' 'unsafe-inline'",
+  // 'unsafe-inline' is required by Next's inline bootstrapping. 'unsafe-eval'
+  // is dev-only: React/HMR uses eval for debugging; production never does.
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline' https://api.fontshare.com https://fonts.googleapis.com",
   "font-src 'self' https://cdn.fontshare.com https://fonts.gstatic.com",
   "img-src 'self' data:",
