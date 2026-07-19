@@ -157,18 +157,27 @@ export async function seedMemoryStore(
   return seedStore(store ?? new MemoryStore());
 }
 
+/** Stores that can simulate bytes flipped at rest (demo only). */
+export interface TamperableStore extends Store {
+  debugTamper(
+    runId: string,
+    seq: number,
+    mutate: (r: Receipt) => Receipt,
+  ): unknown;
+}
+
 /**
  * Flip one field of the middle receipt at rest — the next verifyChain()
  * fails at exactly that seq. Powers the tamper-evidence demo.
  */
 export async function tamperDemoReceipt(
-  store: MemoryStore,
+  store: TamperableStore,
   runId: string,
 ): Promise<{ seq: number }> {
   const receipts = await store.listReceipts(runId);
   if (receipts.length === 0) throw new Error(`run ${runId} has no receipts to tamper`);
   const target = receipts[Math.floor(receipts.length / 2)]!;
-  store.debugTamper(runId, target.seq, (r: Receipt) => ({
+  await store.debugTamper(runId, target.seq, (r: Receipt) => ({
     ...r,
     action: {
       ...r.action,

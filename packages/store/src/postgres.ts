@@ -174,4 +174,38 @@ export class PostgresStore implements Store {
     );
     if (result.rowCount === 0) throw new RunNotFoundError(runId);
   }
+
+  /**
+   * DEMO ONLY — simulates an attacker with write access to the database.
+   *
+   * Flipping bytes here requires disabling the append-only trigger first:
+   * the demo therefore also shows the second line of defense (the attacker
+   * must defeat the database itself, not just the application). The trigger
+   * is re-enabled in the same transaction. Never call from real code paths.
+   */
+  async debugTamper(runId: string, seq: number, mutate: (r: Receipt) => Receipt): Promise<void> {
+    const client = await this.pool.connect();
+    try {
+      await client.query("BEGIN");
+      await client.query("ALTER TABLE receipts DISABLE TRIGGER receipts_no_mutation");
+      const res = await client.query<{ payload: Receipt }>(
+        "SELECT payload FROM receipts WHERE run_id = $1 AND seq = $2",
+        [runId, seq],
+      );
+      const row = res.rows[0];
+      if (!row) throw new Error(`no receipt at seq ${seq} in run ${runId}`);
+      const mutated = mutate(row.payload);
+      await client.query(
+        "UPDATE receipts SET payload = $3 WHERE run_id = $1 AND seq = $2",
+        [runId, seq, JSON.stringify(mutated)],
+      );
+      await client.query("ALTER TABLE receipts ENABLE TRIGGER receipts_no_mutation");
+      await client.query("COMMIT");
+    } catch (err) {
+      await client.query("ROLLBACK");
+      throw err;
+    } finally {
+      client.release();
+    }
+  }
 }
