@@ -150,8 +150,12 @@ into `src`. The Next app consumes the built output the same way (no
 ## Roadmap
 
 - Python SDK
-- hosted public demo (selection point: `apps/web/src/lib/server/store.ts`
-  swaps `MemoryStore` for `PostgresStore` when `DATABASE_URL` is set)
+
+The hosted demo runs on `PostgresStore` backed by serverless Postgres
+(Neon): receipts persist across deployments and cold starts, and the
+append-only trigger is enforced by the database itself. Store selection is
+automatic: `DATABASE_URL` set -> Postgres, otherwise in-memory
+(`apps/web/src/lib/server/store.ts`). Migrations: `pnpm db:migrate`.
 
 ## License
 
