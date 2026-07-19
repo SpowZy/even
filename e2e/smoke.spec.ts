@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("home page renders the hero", async ({ page }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle(/even/);
+  await expect(page).toHaveTitle(/even/i);
   await expect(
     page.getByRole("heading", { name: /every agent action/i }),
   ).toBeVisible();
